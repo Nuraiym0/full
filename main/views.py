@@ -9,13 +9,31 @@ from .models import Restaurant, Post
 from rest_framework.permissions import IsAdminUser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.shortcuts import get_object_or_404
+from review.models import RestourantFavorites, PostFavorites
 
 
 from rest_framework import filters
 
+User=get_object_or_404
+
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
+
+    @action(['POST'], detail=False)
+    def favourite(request):
+        user_id = request.data.get('user')
+        rest_id =request.data.get('rest')
+        user = get_object_or_404(User, id = user_id)
+        rest = get_object_or_404(Post , id = rest_id)
+
+        if RestourantFavorites.objects.filter(rest=rest, user=user).exists():
+            RestourantFavorites.objects.filter(rest=rest,user=user).delete()
+        else:
+            RestourantFavorites.objects.create(rest=rest,user=user)
+        return Response(status=201)
+
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
@@ -39,4 +57,16 @@ class PostViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
+    @action(['POST'], detail=False)
+    def favourite(request):
+        user_id = request.data.get('user')
+        post_id =request.data.get('post')
+        user = get_object_or_404(User, id = user_id)
+        post = get_object_or_404(Restaurant , id = post_id)
+
+        if PostFavorites.objects.filter(post=post, user=user).exists():
+            PostFavorites.objects.filter(post=post,user=user).delete()
+        else:
+            PostFavorites.objects.create(post=post,user=user)
+        return Response(status=201)
 
