@@ -5,4 +5,10 @@ psycopg2-binary
 python-decouple
 drf-yasg
 pillow
-
+pytelegrambotapi
+django-allauth
+django-crispy_forms
+celery
+django-rest-passwordreset
+redis
+django-celery-results
