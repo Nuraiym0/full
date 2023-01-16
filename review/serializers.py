@@ -42,4 +42,5 @@ class RatingRestourantSerializer(ModelSerializer):
         attrs['author'] = request.user
 
         return attrs
+
         
