@@ -35,6 +35,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', swagger_view.with_ui('swagger', cache_timeout=0)),
     path('', include('main.urls')),
+    path('account/', include('book.urls')),
+    # path('accounts/', include('allauth.urls')),
 ]
 
 
