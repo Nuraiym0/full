@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAdminUser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.shortcuts import get_object_or_404
-from review.models import RestourantFavorites, PostFavorites
+from review.models import RestourantFavorites, PostFavorites, PostLike
 
 
 from rest_framework import filters
@@ -72,4 +72,19 @@ class PostViewSet(ModelViewSet):
         else:
             PostFavorites.objects.create(post=post,user=user)
         return Response(status=201)
+
+
+    @action(['PUT'], detail=True)
+    def like(self, request, pk=None):
+        user_id = request.user.id
+        user = get_object_or_404(User, id=user_id)
+        post = get_object_or_404(Post, id=pk)
+
+        if PostLike.objects.filter(post=post, user=user).exists():
+            PostLike.objects.filter(post=post, user=user).delete()
+        else:
+            PostLike.objects.create(post=post, user=user)
+
+        return Response(status=201)
+
 

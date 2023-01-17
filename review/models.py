@@ -38,3 +38,7 @@ class RatingRestourant(models.Model):
 
     def __str__(self):
         return f'{self.author} -> {self.lesson}'
+
+class PostLike(models.Model):
+    user = models.ForeignKey(User, related_name='post_likes' , on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)

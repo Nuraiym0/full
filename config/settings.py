@@ -20,11 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool, default=True)
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['35.185.69.40', '127.0.0.1']
 
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['35.198.27.37', '127.0.0.1:8000']
 
 
 # Application definition
@@ -185,12 +188,12 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:3001',
+# CORS_ALLOWED_ORIGINS = [
+#     'http://127.0.0.1:8000',
+#     'http://127.0.0.1:3000',
+#     'http://127.0.0.1:3001',
 
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://www.thunderclient.com',
-]
+#     'http://localhost:3000',
+#     'http://localhost:3001',
+#     'https://www.thunderclient.com',
+# ]
