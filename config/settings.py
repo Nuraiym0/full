@@ -21,9 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['35.237.235.179', '127.0.0.1']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
-    # 'corsheaders',
+    'corsheaders',
 
     # apps
     'book',
@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Bishkek'
 
@@ -149,7 +149,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     
 }
 
@@ -184,12 +184,12 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://127.0.0.1:8000',
-#     'http://127.0.0.1:3000',
-#     'http://127.0.0.1:3001',
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
 
-#     'http://localhost:3000',
-#     'http://localhost:3001',
-#     'https://www.thunderclient.com',
-# ]
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://www.thunderclient.com',
+]
