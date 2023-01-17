@@ -33,7 +33,7 @@ class RestaurantViewSet(ModelViewSet):
             RestourantFavorites.objects.create(rest=rest,user=user)
         return Response(status=201)
 
-
+    
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import PostComments, RestourantComments, RatingRestourant
+from .models import PostComments, RestourantComments, RatingRestourant, RestourantFavorites
 
 
 class RestourantCommentSerializer(ModelSerializer):
@@ -51,4 +51,8 @@ class RatingRestourantSerializer(ModelSerializer):
 
         return attrs
 
-        
+
+class RestourantFavoritesSerializer(ModelSerializer):
+    class Meta:
+        model = RestourantFavorites
+        fields = ('restourant',)
