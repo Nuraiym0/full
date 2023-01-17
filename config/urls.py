@@ -1,5 +1,6 @@
-"""config URL Configuration
 
+
+"""config URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -37,6 +38,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('account/', include('book.urls')),
     # path('accounts/', include('allauth.urls')),
+    path('', include('review.urls')),
 ]
 
 

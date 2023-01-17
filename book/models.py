@@ -36,7 +36,7 @@ class User(AbstractUser):
     username = None
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to='users', null=True)
+    # photo = models.ImageField(upload_to='users', null=True)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=8, null=True)
 
