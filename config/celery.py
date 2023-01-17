@@ -8,3 +8,4 @@ app.autodiscover_tasks()
 
 # Включить celery
 # python3 -m celery -A config worker -l info
+

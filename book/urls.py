@@ -5,15 +5,15 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .views import RegisterUserView, activate_view, DeleteUserView, ForgotPasswordView, NewPasswordView
 
+from .views import RegisterUserView, DeleteUserView, activate_view, ForgotPassword, ForgotPasswordComplete
 
 urlpatterns = [
     path('register/', RegisterUserView.as_view()),
-    path('activate/<str:activation_code>/', activate_view),
+    path('delete/<str:email>/', DeleteUserView.as_view()),
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
-    path('forgot_password/', ForgotPasswordView.as_view()),
-    path('delete/<str:email>/', DeleteUserView.as_view()),
-    path('password_confirm/<str:activation_code>', NewPasswordView.as_view()),
+    path('activate/<str:activation_code>/', activate_view),
+    path('forgot-password/', ForgotPassword.as_view()),
+    path('forgot-password-complete/<str:activation_code>/', ForgotPasswordComplete.as_view()),
 ]

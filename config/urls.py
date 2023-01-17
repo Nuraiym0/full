@@ -37,11 +37,8 @@ urlpatterns = [
     path('docs/', swagger_view.with_ui('swagger', cache_timeout=0)),
     path('', include('main.urls')),
     path('account/', include('book.urls')),
-    # path('accounts/', include('allauth.urls')),
     path('', include('review.urls')),
 ]
-
-
 
 from django.conf import settings
 from django.conf.urls.static import static
