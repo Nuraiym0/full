@@ -16,6 +16,7 @@ class RestourantCommentSerializer(ModelSerializer):
 
         return attrs
 
+
 class PostCommentsSerializer(ModelSerializer):
     class Meta:
         model = PostComments
@@ -37,12 +38,11 @@ class PostCommentsSerializer(ModelSerializer):
         return rep
 
 
-
 class RatingRestourantSerializer(ModelSerializer):
-
     class Meta:
         model = RatingRestourant
         fields = ('__all__')
+
 
     def validate(self, attrs):
         attrs =  super().validate(attrs)

@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.crypto import get_random_string
-from book.tasks import send_activation_code
 from django.core.mail import send_mail
+
+from book.tasks import send_activation_code
 
 
 class UserManager(BaseUserManager):
@@ -17,7 +18,9 @@ class UserManager(BaseUserManager):
         user.create_activation_code()
         user.save(using=self._db)
         send_activation_code.delay(user.email, user.activation_code)
+        
         return user
+
 
     def create_superuser(self, email, password, **kwargs):
         assert email, 'Email is required'
@@ -28,6 +31,7 @@ class UserManager(BaseUserManager):
         user:User = self.model(email=email, **kwargs)
         user.set_password(password)
         user.save(using=self._db)
+        
         return user
 
 
@@ -58,7 +62,6 @@ class User(AbstractUser):
 
         for user in users:
            ratings.append((user, user.likes()))
-        
         ratings.sort(key=lambda x: x[1], reverse=True)
         
         for r in ratings:
@@ -66,11 +69,11 @@ class User(AbstractUser):
                 return ratings.index(r) + 1
 
 
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
 
     def create_activation_code(self):
         self.activation_code = get_random_string(8, 'qwertyuiopasdfghjklzxcvbnm123456789')
@@ -83,6 +86,7 @@ class User(AbstractUser):
         Confirm password changes: {activation_url}
         """
         send_mail("Please confirm", message, "ruslan883888@gmail.com", [self.email])
+
 
     def __str__(self) -> str:
         return f'{self.username} -> {self.email}'

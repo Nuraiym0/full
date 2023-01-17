@@ -1,5 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+
 from .models import Post
+
 
 class IsAuthorOrReadOnly(BasePermission):
     def has_permission(self, request, view):

@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class Restaurant(models.Model):
     image = models.ImageField(upload_to='media', null=True)
@@ -11,12 +9,15 @@ class Restaurant(models.Model):
     cuisine = models.CharField(max_length=50)
     work_time = models.DateTimeField()
 
+
     def __str__(self) -> str:
         return self.title
     
+
     class Meta:
         verbose_name = "Restaurant"
     
+
 class Post(models.Model):
     title = models.CharField(max_length=70, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
@@ -31,6 +32,7 @@ class Post(models.Model):
     ]
 
     type = models.CharField(choices=TYPE, max_length=3, default='BRK', verbose_name='Тип')
+
 
 # class Subscription(models.Model):
 #     subscribe = models.ForeignKey(User, related_name='subscriptions', on_delete=models.CASCADE)

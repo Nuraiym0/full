@@ -1,27 +1,24 @@
-from rest_framework.viewsets import ModelViewSet
-
-from rest_framework.decorators import action
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 from .serializers import RestaurantSerializer, PostSerializer
 from .models import Restaurant, Post
-from rest_framework.permissions import IsAdminUser
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from django.shortcuts import get_object_or_404
-from review.models import RestourantFavorites, PostFavorites, PostLike
-
-
-from rest_framework import filters
 from .filters import RestourantFilter
 
+from review.models import RestourantFavorites, PostFavorites, PostLike
+
 User=get_object_or_404
+
 
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
+
 
     @action(['POST'], detail=False)
     def favourite(request):
@@ -42,9 +39,12 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     filterset_class = RestourantFilter
 
+
     @swagger_auto_schema(manual_parameters=[
         openapi.Parameter('q', openapi.IN_QUERY, type=openapi.TYPE_STRING)
     ])
+
+
     @action(['GET'], detail=False)
     def search(self, request):
         q = request.query_params.get('q')
@@ -59,6 +59,7 @@ class PostViewSet(ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=200)
+
 
     @action(['POST'], detail=False)
     def favourite(request):

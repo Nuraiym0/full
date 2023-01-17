@@ -1,9 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from .views import PostCommentsViewSet, RestourantCommentsViewSet, CreateRatingAPIView
 
 
 router = DefaultRouter()
+
 router.register('post-comments', PostCommentsViewSet)
 router.register('rest-comments', RestourantCommentsViewSet)
 
