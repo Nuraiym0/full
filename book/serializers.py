@@ -11,6 +11,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         fields = ('email', 'password', 'password_confirm')
 
     def validate(self, attrs):
+        # attrs = {"email":"some@gmail.com", "password":"1234", "password_confirm":"1234"}
         pass1 = attrs.get("password")
         pass2 = attrs.pop("password_confirm")
         if pass1 != pass2:
@@ -18,13 +19,15 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def validate_email(self, email):
+        # email = "some@gmail.com"
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError("User with this email already exists")
         return email
 
     def create(self, validated_data):
+        # validated_data = {"email":"some@gmail.com", "password":"1234", "password_confirm":"1234"}
         return User.objects.create_user(**validated_data)
-        
+
 class ForgotSerializer(serializers.Serializer):
     email = serializers.EmailField()
 

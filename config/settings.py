@@ -39,21 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
-
-    'crispy_forms',
-
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
     'django_filters',
     # 'corsheaders',
-
-    'django_celery_results',
 
     # apps
     'book',
@@ -64,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -166,22 +157,12 @@ REST_FRAMEWORK = {
     
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-DEFAULT_FROM_EMAIL = config('SMTP_EMAIL')
-EMAIL_HOST_USER = config('SMTP_EMAIL')
-EMAIL_HOST_PASSWORD = config('SMTP_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-ACTIVATE_USERS_EMAIL = True
-
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -193,13 +174,26 @@ SWAGGER_SETTINGS = {
     }
 }
 
-UTHENTICATION_BACKENDS = [
-  
-    'django.contrib.auth.backends.ModelBackend',
-    'allauAth.account.auth_backends.AuthenticationBackend',
-    
-]
-SITE_ID=1
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+DEFAULT_FROM_EMAIL = config('SMTP_EMAIL')
+EMAIL_HOST_USER = config('SMTP_EMAIL')
+EMAIL_HOST_PASSWORD = config('SMTP_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+ACTIVATE_USERS_EMAIL = True
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     'http://127.0.0.1:8000',
+#     'http://127.0.0.1:3000',
+#     'http://127.0.0.1:3001',
+
+#     'http://localhost:3000',
+#     'http://localhost:3001',
+#     'https://www.thunderclient.com',
+# ]
