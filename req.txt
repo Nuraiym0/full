@@ -12,3 +12,4 @@ celery
 django-rest-passwordreset
 redis
 django-celery-results
+django-filter

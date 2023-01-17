@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from django.db.models import Q
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import RestaurantSerializer, PostSerializer
 from .models import Restaurant, Post
@@ -14,6 +15,7 @@ from review.models import RestourantFavorites, PostFavorites
 
 
 from rest_framework import filters
+from .filters import RestourantFilter
 
 User=get_object_or_404
 
@@ -38,6 +40,7 @@ class RestaurantViewSet(ModelViewSet):
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    filterset_class = RestourantFilter
 
     @swagger_auto_schema(manual_parameters=[
         openapi.Parameter('q', openapi.IN_QUERY, type=openapi.TYPE_STRING)
