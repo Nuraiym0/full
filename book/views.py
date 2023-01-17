@@ -28,13 +28,11 @@ class ForgotPasswordView(APIView):
 class DeleteUserView(APIView):
     def delete(self, request,email):
         user = get_object_or_404(User, email=email)
-        print(user)
-        print(request.user)
-        if request.user.is_staff:
-            user.delete()
-            return Response(status=204) 
-        return Response(status=403)
-
+        if user.is_staff:
+            return Response(status=403) 
+        user.delete()
+        return Response(status=204) 
+        
 class NewPasswordView(APIView):
     def get(self, request, activation_code):
         user = get_object_or_404(User, activation_code=activation_code)
