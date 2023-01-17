@@ -20,8 +20,10 @@ class RestourantAdmin(admin.ModelAdmin):
     image_show.__name__ = 'cover'
 
 class PostAdmin(admin.ModelAdmin):
+
     list_display = ['title', 'image_show','description', 'price', 'cuisine' ]
     list_filter = ['price', 'cuisine' ]
+
 
     def image_show(self, obj):
         if obj.image:
