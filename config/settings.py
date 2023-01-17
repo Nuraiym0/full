@@ -192,3 +192,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3001',
     'https://www.thunderclient.com',
 ]
+
+"""CELERY"""
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
