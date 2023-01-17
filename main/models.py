@@ -22,6 +22,7 @@ class Post(models.Model):
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='media', null=True, verbose_name='Изображение')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    cuisine = models.ForeignKey(Restaurant, related_name='post', on_delete=models.CASCADE)
 
     TYPE = [
         ('BRK', 'Завтрак'),
