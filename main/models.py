@@ -15,7 +15,7 @@ class Restaurant(models.Model):
         return self.title
     
     class Meta:
-        verbose_name = "Ресторан"
+        verbose_name = "Restaurant"
     
 class Post(models.Model):
     title = models.CharField(max_length=70, verbose_name='Название')
