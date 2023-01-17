@@ -4,5 +4,15 @@ djangorestframework-simplejwt
 psycopg2-binary
 python-decouple
 drf-yasg
+celery
+redis
+django-celery-results
+django-filter
+gunicorn
 pillow
+django-cors-headers
+pytelegrambotapi
+
+
+
 
