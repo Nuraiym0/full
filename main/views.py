@@ -8,7 +8,7 @@ from drf_yasg import openapi
 
 from .serializers import RestaurantSerializer, PostSerializer
 from .models import Restaurant, Post
-from .filters import RestourantFilter
+from .filters import RestourantFilter, PostFilter
 
 from review.models import RestourantFavorites, PostFavorites, PostLike
 

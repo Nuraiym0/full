@@ -3,8 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
-from book.tasks import send_activation_code
 
+from book.tasks import send_activation_code
 
 from .tasks import send_activation_code
 
