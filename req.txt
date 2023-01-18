@@ -11,7 +11,9 @@ django-filter
 gunicorn
 pillow
 django-cors-headers
-pytelegrambotapi
+requests
+bs4
+lxmlpytelegrambotapi
 
 
 
