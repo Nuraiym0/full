@@ -13,7 +13,7 @@ class PostLine(admin.TabularInline):
 
 
 class RestourantAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image_show','description', 'cuisine', 'work_time', 'rating' ]
+    list_display = ['author', 'title', 'image_show','description', 'cuisine', 'work_time', 'rating' ]
     list_filter = ['cuisine', 'rating'  ]
 
 
@@ -26,8 +26,8 @@ class RestourantAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image_show','description', 'price', 'cuisine' ]
-    list_filter = ['price', 'cuisine' ]
+    list_display = ['title', 'image_show','description', 'price', 'post_category', 'title_of_restourant']
+    list_filter = ['price', ]
 
 
     def image_show(self, obj):

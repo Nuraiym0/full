@@ -3,10 +3,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import NotAcceptable
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
-from .serializers import RestaurantSerializer, PostSerializer
+from .serializers import RestaurantSerializer, PostSerializer, CategorySerializers
 from .models import Restaurant, Post
 from .filters import RestourantFilter, PostFilter
 
@@ -88,4 +89,19 @@ class PostViewSet(ModelViewSet):
 
         return Response(status=201)
 
+
+    @action(['POST'], detail=True)
+    def category(self, request, pk=None):
+        post = get_object_or_404(Post, id=pk)
+       
+        if post.user != request.user:
+            raise NotAcceptable('Недостаточно прав')
+
+        request.data._mutable = True
+        request.data.update({'post': pk})
+        serializer = CategorySerializers(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=201)
 
