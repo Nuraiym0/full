@@ -46,9 +46,6 @@ class Category(models.Model):
     category = models.ForeignKey(Post, related_name='post_categories', on_delete=models.CASCADE, default='')
 
 
-    def __str__(self):
-        return self.title
-
 # class Subscription(models.Model):
 #     subscribe = models.ForeignKey(User, related_name='subscriptions', on_delete=models.CASCADE)
 #     restourant = models.ForeignKey(Restaurant, related_name='subscribers', on_delete=models.CASCADE)

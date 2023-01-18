@@ -21,6 +21,22 @@ class RestaurantViewSet(ModelViewSet):
     serializer_class = RestaurantSerializer
     filterset_class = RestourantFilter
 
+    @action(['GET'], detail=False)
+    def search(self, request):
+        q = request.query_params.get('q')
+        queryset = self.get_queryset() 
+        if q:
+            queryset = queryset.filter(Q(title__icontains=q))
+
+        pagination = self.paginate_queryset(queryset)
+        if pagination:
+            serializer = self.get_serializer(pagination, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+
     @action(['POST'], detail=False)
     def favourite(request):
         user_id = request.data.get('user')
