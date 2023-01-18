@@ -1,14 +1,14 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Restaurant, Post
+from .models import Restaurant, Product
 
 class RestaurantSerializer(ModelSerializer):
     class Meta:
         model = Restaurant
         fields = '__all__'
 
-class PostSerializer(ModelSerializer):
+class ProductSerializer(ModelSerializer):
     class Meta:
-        model = Post
+        model = Product
         fields = '__all__'
 
 

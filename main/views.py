@@ -3,10 +3,12 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from django.db.models import Q
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from rest_framework.generics import CreateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import RestaurantSerializer, PostSerializer
-from .models import Restaurant, Post
+from .models import Restaurant, Product
 from rest_framework.permissions import IsAdminUser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -22,13 +24,25 @@ User=get_object_or_404
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
+    permission_classes = []
+    def get_permissions(self):
+        if self.action in ['retrive', 'list', 'search']:
+            return []
+        return [IsAdminUser()]
+        
+
+class CreateRestaurantAPIView(CreateAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAdminUser]
+
 
     @action(['POST'], detail=False)
     def favourite(request):
         user_id = request.data.get('user')
         rest_id =request.data.get('rest')
         user = get_object_or_404(User, id = user_id)
-        rest = get_object_or_404(Post , id = rest_id)
+        rest = get_object_or_404(Product , id = rest_id)
 
         if RestourantFavorites.objects.filter(rest=rest, user=user).exists():
             RestourantFavorites.objects.filter(rest=rest,user=user).delete()
@@ -37,10 +51,15 @@ class RestaurantViewSet(ModelViewSet):
         return Response(status=201)
 
 
-class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
     serializer_class = PostSerializer
     filterset_class = RestourantFilter
+    def get_permissions(self):
+        if self.action in ['retrive', 'list', 'search']:
+            return []
+        return [IsAdminUser()]
+        
 
     @swagger_auto_schema(manual_parameters=[
         openapi.Parameter('q', openapi.IN_QUERY, type=openapi.TYPE_STRING)
