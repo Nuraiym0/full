@@ -1,9 +1,11 @@
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Restaurant(models.Model):
-    author = models.CharField(max_length=100)
+    author = models.CharField(max_length=50)
     image = models.ImageField(upload_to='media', null=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
@@ -11,22 +13,22 @@ class Restaurant(models.Model):
     cuisine = models.CharField(max_length=50)
     work_time = models.DateTimeField()
 
+
     def __str__(self) -> str:
         return self.title
     
+
     class Meta:
         verbose_name = "Restaurant"
-    
 
-class Product(models.Model):
-    product_id = models.AutoField
-    product_name = models.CharField(max_length=50)
-    category = models.CharField(max_length=50, default="")
-    subcategory = models.CharField(max_length=50, default="")
-    price = models.IntegerField(default=0)
-    desc = models.CharField(max_length=200)
-    pub_date = models.DateField()
-    image = models.ImageField(upload_to="media", default="")
+
+class Post(models.Model):
+    title = models.CharField(max_length=70, verbose_name='Название')
+    image = models.ImageField(upload_to='media', null=True, verbose_name='Изображение')
+    description = models.TextField(verbose_name='Описание')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    title_of_restourant = models.ForeignKey(Restaurant, related_name='restourant_name', on_delete=models.CASCADE, default='')
+    post_category = models.CharField(max_length=50)
 
     TYPE = [
         ('BRK', 'Завтрак'),
@@ -37,51 +39,17 @@ class Product(models.Model):
     type = models.CharField(choices=TYPE, max_length=3, default='BRK', verbose_name='Тип')
 
 
-
     def __str__(self):
-        return self.product_name
+        return self.title
 
+class Category(models.Model):
+    restourant_name = models.ForeignKey(Restaurant, related_name='category', on_delete=models.CASCADE)
+    cuisine = models.ForeignKey(Restaurant, related_name='rest_category', on_delete=models.CASCADE)
+    category = models.ForeignKey(Post, related_name='post_categories', on_delete=models.CASCADE, default='')
 
-
-class Contact(models.Model):
-    msg_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    email = models.CharField(max_length=70, default="")
-    phone = models.CharField(max_length=70, default="")
-    desc = models.CharField(max_length=500, default="")
-    timestamp = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.name
-
-
-class Orders(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    items_json = models.CharField(max_length=5000)
-    userId = models.IntegerField(default=0)
-    amount = models.IntegerField(default=0)
-    name = models.CharField(max_length=90)
-    email = models.CharField(max_length=111)
-    address = models.CharField(max_length=111)
-    city = models.CharField(max_length=111)
-    state = models.CharField(max_length=111)
-    zip_code = models.CharField(max_length=111)
-    phone = models.CharField(max_length=111, default="")
-    timestamp = models.DateTimeField(default=timezone.now)
-
-
-class OrderUpdate(models.Model):
-    update_id = models.AutoField(primary_key=True)
-    order_id = models.IntegerField(default="")
-    update_desc = models.CharField(max_length=5000)
-    timestamp = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.update_desc
-        
 # class Subscription(models.Model):
 #     subscribe = models.ForeignKey(User, related_name='subscriptions', on_delete=models.CASCADE)
-#     user = models.ForeignKey(User, related_name='subscribers', on_delete=models.CASCADE)
+#     restourant = models.ForeignKey(Restaurant, related_name='subscribers', on_delete=models.CASCADE)
 
         
 

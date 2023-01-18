@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import PostComments, RestourantComments, RatingRestourant
+from .models import PostComments, RestourantComments, RatingRestourant, RestourantFavorites
 
 
 class RestourantCommentSerializer(ModelSerializer):
@@ -15,6 +15,7 @@ class RestourantCommentSerializer(ModelSerializer):
         attrs['user'] = request.user
 
         return attrs
+
 
 class PostCommentsSerializer(ModelSerializer):
     class Meta:
@@ -37,12 +38,11 @@ class PostCommentsSerializer(ModelSerializer):
         return rep
 
 
-
 class RatingRestourantSerializer(ModelSerializer):
-
     class Meta:
         model = RatingRestourant
         fields = ('__all__')
+
 
     def validate(self, attrs):
         attrs =  super().validate(attrs)
@@ -51,4 +51,8 @@ class RatingRestourantSerializer(ModelSerializer):
 
         return attrs
 
-        
+
+class RestourantFavoritesSerializer(ModelSerializer):
+    class Meta:
+        model = RestourantFavorites
+        fields = ('restourant',)
