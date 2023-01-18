@@ -13,7 +13,8 @@ pillow
 django-cors-headers
 requests
 bs4
-lxmlpytelegrambotapi
+lxml
+pytelegrambotapi
 
 
 

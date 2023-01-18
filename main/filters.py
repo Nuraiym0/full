@@ -17,8 +17,9 @@ class RestourantFilter(FilterSet):
 class PostFilter(FilterSet):
     price = django_filters.DateFilter(field_name='price')
     cuisine = django_filters.CharFilter(field_name='cuisine')
+    post_category = django_filters.CharFilter(field_name='post_category')
 
 
     class Meta:
         model = Post
-        fields = ['price', 'cuisine']
+        fields = ['price', 'post_category']
