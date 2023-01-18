@@ -18,7 +18,7 @@ User=get_object_or_404
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-
+    filterset_class = RestourantFilter
 
     @action(['POST'], detail=False)
     def favourite(request):
@@ -37,7 +37,7 @@ class RestaurantViewSet(ModelViewSet):
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    filterset_class = RestourantFilter
+    filterset_class = PostFilter
 
 
     @swagger_auto_schema(manual_parameters=[
