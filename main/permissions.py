@@ -18,5 +18,7 @@ class IsAuthorOrReadOnly(BasePermission):
             return request.user == obj.title_of_restourant.author
         return request.user == obj.author
     
-
+class IsAdminUser(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.user
     

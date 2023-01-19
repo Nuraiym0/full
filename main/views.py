@@ -6,9 +6,10 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotAcceptable
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.permissions import IsAdminUser
 
-from .serializers import RestaurantSerializer, PostSerializer, CategorySerializers
-from .models import Restaurant, Post
+from .serializers import RestaurantSerializer, PostSerializer, CategorySerializers, OrdersSerializer, OrderUpdateSerializer
+from .models import Restaurant, Post, Orders, OrderUpdate
 from .filters import RestourantFilter, PostFilter
 
 from review.models import RestourantFavorites, PostFavorites, PostLike
@@ -20,6 +21,11 @@ class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     filterset_class = RestourantFilter
+
+    def get_permissions(self):
+        if self.action in ['retrive', 'list', 'search']:
+            return []
+        return [IsAdminUser()]
     
 
     @action(['GET'], detail=False)
@@ -56,6 +62,12 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     filterset_class = PostFilter
+
+    def get_permissions(self):
+        if self.action in ['retrive', 'list', 'search']:
+            return []
+        return [IsAdminUser()]
+        
 
 
     @swagger_auto_schema(manual_parameters=[
@@ -122,6 +134,13 @@ class PostViewSet(ModelViewSet):
 
         return Response(status=201)
 
-# from django.shortcuts import render
-# def index(request):
-# 	return render(request,'main/index.html')
+
+
+class OrdersViewSet(ModelViewSet):
+    queryset = Orders.objects.all()
+    serializer_class = OrdersSerializer
+    
+class OrderUpdateViewSet(ModelViewSet):
+    queryset = OrderUpdate.objects.all()
+    serializer_class = OrderUpdateSerializer
+

@@ -47,3 +47,7 @@ class User(AbstractUser):
 
     def create_activation_code(self):
         self.activation_code = get_random_string(8, 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890')
+    
+    class Meta:
+        verbose_name = "Юзер"
+        verbose_name_plural = "Юзеры"

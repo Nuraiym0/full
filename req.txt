@@ -16,5 +16,4 @@ bs4
 lxml
 pytelegrambotapi
 payments
-
 django-allauth
