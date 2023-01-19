@@ -121,3 +121,6 @@ class PostViewSet(ModelViewSet):
 
         return Response(status=201)
 
+# from django.shortcuts import render
+# def index(request):
+# 	return render(request,'main/index.html')

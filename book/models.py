@@ -40,6 +40,7 @@ class User(AbstractUser):
     balance = models.IntegerField(default=500)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=8, null=True)
+    # account_balanse = models.DecimalField(max_digits=16, decimal_places=2, default=0.0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
