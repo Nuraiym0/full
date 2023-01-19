@@ -1,7 +1,8 @@
 from rest_framework.serializers import ModelSerializer
+
 # from rest_framework import serializers
 
-from .models import Restaurant, Post, Category #, Subscription
+from .models import Restaurant, Post, Category, Orders, OrderUpdate#, Subscription
 
 
 class RestaurantSerializer(ModelSerializer):
@@ -55,6 +56,26 @@ class CategorySerializers(ModelSerializer):
         rep['post'] = PostSerializer(instance.post).data
         
         return rep
+
+
+class OrdersSerializer(ModelSerializer):
+    class Meta:
+        model = Orders
+        fields = '__all__'
+
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)
+        
+
+class OrderUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = OrderUpdate
+        fields = '__all__'
+
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)
 
 
 # class SubscriptionSerializer(serializers.ModelSerializer):

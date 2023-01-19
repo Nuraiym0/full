@@ -1,7 +1,5 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
-
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 from .models import Post
-
 
 class IsAuthorOrReadOnly(BasePermission):
     def has_permission(self, request, view):
@@ -17,6 +15,10 @@ class IsAuthorOrReadOnly(BasePermission):
         if not request.user.is_authenticated:
             return False
         if isinstance(obj, Post):
-            return request.user == obj.course.author
+            return request.user == obj.title_of_restourant.author
         return request.user == obj.author
+    
+class IsAdminUser(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.user
     

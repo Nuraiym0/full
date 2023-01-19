@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
@@ -40,8 +39,7 @@ class User(AbstractUser):
     balance = models.IntegerField(default=500)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=8, null=True)
-    # account_balanse = models.DecimalField(max_digits=16, decimal_places=2, default=0.0)
-
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -49,3 +47,7 @@ class User(AbstractUser):
 
     def create_activation_code(self):
         self.activation_code = get_random_string(8, 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890')
+    
+    class Meta:
+        verbose_name = "Юзер"
+        verbose_name_plural = "Юзеры"
