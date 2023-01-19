@@ -18,6 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
+from django.contrib.auth.views import LogoutView
+from oauth_app.views import google_activate, google_login
+
+
 
 
 """=============Swagger docs============="""
@@ -41,6 +46,10 @@ urlpatterns = [
     path('', include('main.urls')),
     path('account/', include('book.urls')),
     path('', include('review.urls')),
+    path('', TemplateView.as_view(template_name="index.html")),
+    path('accounts/', include('allauth.urls')),
+    path('logout', LogoutView.as_view()),
+    path('google/activate/', google_activate),
 ]
 
 
