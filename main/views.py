@@ -20,13 +20,34 @@ class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     filterset_class = RestourantFilter
+    
+    def get_permissions(self):
+        if self.action in ['retrive', 'list', 'search']:
+            return [IsAuthorOrReadOnly()]
+        return [IsMentor()]
+        
+    @action(['GET'], detail=False)
+    def search(self, request):
+        q = request.query_params.get('q')
+        queryset = self.get_queryset() 
+        if q:
+            queryset = queryset.filter(Q(title__icontains=q))
+
+        pagination = self.paginate_queryset(queryset)
+        if pagination:
+            serializer = self.get_serializer(pagination, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
 
     @action(['POST'], detail=False)
     def favourite(request):
         user_id = request.data.get('user')
         rest_id =request.data.get('rest')
         user = get_object_or_404(User, id = user_id)
-        rest = get_object_or_404(Product , id = rest_id)
+        rest = get_object_or_404(Post , id = rest_id)
 
         if RestourantFavorites.objects.filter(rest=rest, user=user).exists():
             RestourantFavorites.objects.filter(rest=rest,user=user).delete()

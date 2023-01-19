@@ -27,7 +27,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='media', null=True, verbose_name='Изображение')
     description = models.TextField(verbose_name='Описание')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
-    title_of_restourant = models.ForeignKey(Restaurant, related_name='restourant_name', on_delete=models.CASCADE, default='')
+    title_of_restourant = models.ForeignKey(Restaurant, related_name='restourant_name', on_delete=models.DO_NOTHING, default='')
     post_category = models.CharField(max_length=50)
 
     TYPE = [
@@ -43,7 +43,7 @@ class Post(models.Model):
         return self.title
 
 class Category(models.Model):
-    restourant_name = models.ForeignKey(Restaurant, related_name='category', on_delete=models.CASCADE)
+    restourant_name = models.ForeignKey(Restaurant, related_name='category', on_delete=models.SET_DEFAULT)
     cuisine = models.ForeignKey(Restaurant, related_name='rest_category', on_delete=models.CASCADE)
     category = models.ForeignKey(Post, related_name='post_categories', on_delete=models.CASCADE, default='')
 
