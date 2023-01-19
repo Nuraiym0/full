@@ -21,11 +21,7 @@ class RestaurantViewSet(ModelViewSet):
     serializer_class = RestaurantSerializer
     filterset_class = RestourantFilter
     
-    def get_permissions(self):
-        if self.action in ['retrive', 'list', 'search']:
-            return [IsAuthorOrReadOnly()]
-        return [IsMentor()]
-        
+
     @action(['GET'], detail=False)
     def search(self, request):
         q = request.query_params.get('q')
@@ -126,3 +122,6 @@ class PostViewSet(ModelViewSet):
 
         return Response(status=201)
 
+# from django.shortcuts import render
+# def index(request):
+# 	return render(request,'main/index.html')

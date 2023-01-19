@@ -43,8 +43,8 @@ class Post(models.Model):
         return self.title
 
 class Category(models.Model):
-    restourant_name = models.ForeignKey(Restaurant, related_name='category', on_delete=models.SET_DEFAULT)
-    cuisine = models.ForeignKey(Restaurant, related_name='rest_category', on_delete=models.CASCADE)
+    # restourant_name = models.ForeignKey(Restaurant, related_name='category', on_delete=models.CASCADE)
+    cuisine = models.ForeignKey(Restaurant, related_name='rest_category', on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Post, related_name='post_categories', on_delete=models.CASCADE, default='')
 
 # class Subscription(models.Model):
